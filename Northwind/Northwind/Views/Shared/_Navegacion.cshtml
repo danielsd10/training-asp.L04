@@ -1,0 +1,52 @@
+﻿<ul class="nav" id="side-menu">
+    <li class="sidebar-search">
+        <div class="input-group custom-search-form">
+            <input type="text" class="form-control" placeholder="Buscar...">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </span>
+        </div>
+        <!-- /input-group -->
+    </li>
+    <li>
+        <a href="@Url.Action("Index", "Home")"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+    </li>
+    <li>
+        <a href="#"><i class="fa fa-folder fa-fw"></i> Categorías<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a href="@Url.Action("Index", "Categorias")"><i class="fa fa-list fa-fw"></i> Listar Categorías</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Nuevo", "Categorias")"><i class="fa fa-asterisk fa-fw"></i> Nueva Categoría</a>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>
+    <li>
+        <a href="#"><i class="fa fa-folder fa-fw"></i> Productos<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a href="@Url.Action("Index", "Productos")"><i class="fa fa-list fa-fw"></i> Listar Productos</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Nuevo", "Productos")"><i class="fa fa-asterisk fa-fw"></i> Nueva Producto</a>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>
+    <li>
+        <a href="#"><i class="fa fa-files-o fa-fw"></i> Órdenes<span class="fa arrow"></span></a>
+        <ul class="nav nav-second-level">
+            <li>
+                <a href="@Url.Action("Index", "Ordenes")"><i class="fa fa-list fa-fw"></i> Ver Órdenes</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Nuevo", "Ordenes")"><i class="fa fa-asterisk fa-fw"></i> Nueva Órden</a>
+            </li>
+        </ul>
+        <!-- /.nav-second-level -->
+    </li>
+</ul>
