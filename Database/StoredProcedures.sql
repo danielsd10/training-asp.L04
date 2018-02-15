@@ -1,4 +1,4 @@
-/* Procedimientos */
+/* Procedimientos 2018-02-13 */
 
 CREATE PROCEDURE ListAllCategories
 AS
@@ -174,16 +174,6 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE GetOrderDetails (
-@OrderID int
-)
-AS
-BEGIN
-	SELECT * FROM [dbo].[Order Details]
-	ORDER BY OrderID ASC;
-END
-GO
-
 CREATE PROCEDURE InsertOrder (
 @CustomerID nchar(5),
 @EmployeeID int = null,
@@ -206,5 +196,62 @@ CREATE PROCEDURE InsertOrderDetail (
 BEGIN
 	INSERT INTO [dbo].[Order Details] (OrderID, ProductID, UnitPrice, Quantity, Discount)
 	VALUES (@OrderID, @ProductID, @UnitPrice, @Quantity, @Discount);
+END
+GO
+
+/* Procedimientos 2018-02-15 */
+CREATE PROCEDURE GetCategory(
+@CategoryID int
+)
+AS
+BEGIN
+	SELECT C.* FROM [dbo].[Categories] C
+	WHERE C.CategoryID = @CategoryID;
+END
+GO
+
+CREATE PROCEDURE GetProduct(
+@ProductID int
+)
+AS
+BEGIN
+	SELECT P.*, C.CategoryName, C.Description, S.CompanyName
+	FROM [dbo].[Products] P
+	LEFT JOIN [dbo].[Categories] C ON P.CategoryID = C.CategoryID
+	LEFT JOIN [dbo].[Suppliers] S ON P.SupplierID = S.SupplierID
+	WHERE P.ProductID = @ProductID;
+END
+GO
+
+CREATE PROCEDURE GetSupplier(
+@SupplierID int
+)
+AS
+BEGIN
+	SELECT S.* FROM [dbo].[Suppliers] S
+	WHERE S.SupplierID = @SupplierID;
+END
+GO
+
+CREATE PROCEDURE GetOrder(
+@OrderID int
+)
+AS
+BEGIN
+	SELECT O.*, C.CompanyName, E.LastName, E.FirstName FROM [dbo].[Orders] O
+	LEFT JOIN [dbo].[Customers] C ON O.CustomerID = C.CustomerID
+	LEFT JOIN [dbo].[Employees] E ON O.EmployeeID = E.EmployeeID
+	WHERE O.OrderID = @OrderID;
+END
+GO
+
+CREATE PROCEDURE GetOrderDetails (
+@OrderID int
+)
+AS
+BEGIN
+	SELECT OD.*, P.ProductName FROM [dbo].[Order Details] OD
+	LEFT JOIN [dbo].[Products] P ON OD.ProductID = P.ProductID
+	WHERE OD.OrderID = @OrderID;
 END
 GO
