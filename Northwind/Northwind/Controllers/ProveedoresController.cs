@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Northwind.BL.Components;
 using Northwind.BL.Entities;
+using Northwind.Models;
 
 namespace Northwind.Controllers
 {
@@ -18,6 +19,7 @@ namespace Northwind.Controllers
         {
             List<Proveedor> Proveedores = ProveedoresBL.ListarProveedores();
             ViewBag.Titulo = "Proveedores";
+            ViewBag.Respuesta = (RespuestaModel)TempData["Respuesta"];
             return View(Proveedores);
         }
 
@@ -25,6 +27,7 @@ namespace Northwind.Controllers
         [HttpGet]
         public ActionResult Nuevo()
         {
+            ViewBag.Titulo = "Nuevo Proveedor";
             return View();
         }
 
@@ -32,28 +35,77 @@ namespace Northwind.Controllers
         [HttpPost]
         public ActionResult Nuevo(Proveedor objDatos)
         {
-            return View();
+            if (ProveedoresBL.InsertarProveedor(objDatos))
+            {
+                TempData["Respuesta"] = new RespuestaModel() {
+                    Tipo = "success",
+                    Mensaje = "El proveedor se registró correctamente."
+                };
+            }
+            else
+            {
+                TempData["Respuesta"] = new RespuestaModel()
+                {
+                    Tipo = "danger",
+                    Mensaje = "No se pudo registrar el proveedor."
+                };
+            }
+            return RedirectToAction("Index");
         }
 
-        // GET: Proveedores/Editar/{id}
+        // GET: Proveedores/Editar/{Id}
         [HttpGet]
-        public string Editar(int Id)
+        public ActionResult Editar(int Id)
         {
-            return "Editar ID = " + Id.ToString();
+            ViewBag.Titulo = "Editar Proveedor";
+            Proveedor Proveedor = ProveedoresBL.ListarProveedor(Id);
+            return View("Nuevo", Proveedor);
         }
 
-        // POST: Proveedores/Editar/{id}
+        // POST: Proveedores/Editar/{Id}
         [HttpPost]
-        public ActionResult Editar(Proveedor objDatos)
+        public ActionResult Editar(int Id, Proveedor objDatos)
         {
-            return View();
+            if (ProveedoresBL.ActualizarProveedor(objDatos))
+            {
+                TempData["Respuesta"] = new RespuestaModel()
+                {
+                    Tipo = "success",
+                    Mensaje = "El proveedor se actualizó correctamente."
+                };
+            }
+            else
+            {
+                TempData["Respuesta"] = new RespuestaModel()
+                {
+                    Tipo = "danger",
+                    Mensaje = "No se pudo actualizar el proveedor."
+                };
+            }
+            return RedirectToAction("Index");
         }
 
-        // GET: Proveedores/Eliminar/{id}
+        // GET: Proveedores/Eliminar/{Id}
         [HttpGet]
-        public string Eliminar(int Id)
+        public ActionResult Eliminar(int Id)
         {
-            return "Eliminar ID = " + Id.ToString();
+            if (ProveedoresBL.EliminarProveedor(Id))
+            {
+                TempData["Respuesta"] = new RespuestaModel()
+                {
+                    Tipo = "warning",
+                    Mensaje = "El proveedor se eliminó correctamente."
+                };
+            }
+            else
+            {
+                TempData["Respuesta"] = new RespuestaModel()
+                {
+                    Tipo = "danger",
+                    Mensaje = "No se pudo eliminar el proveedor."
+                };
+            }
+            return RedirectToAction("Index");
         }
     }
 }

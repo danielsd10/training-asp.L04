@@ -14,5 +14,25 @@ namespace Northwind.BL.Components
             return objProveedoresDL.ListarProveedores();
         }
 
+        public Proveedor ListarProveedor(int Id)
+        {
+            return objProveedoresDL.ObtenerProveedor(Id);
+        }
+
+        public bool InsertarProveedor(Proveedor Proveedor)
+        {
+            return objProveedoresDL.InsertarProveedor(Proveedor);
+        }
+
+        public bool ActualizarProveedor(Proveedor Proveedor)
+        {
+            return objProveedoresDL.ActualizarProveedor(Proveedor);
+        }
+
+        public bool EliminarProveedor(int Id)
+        {
+            return objProveedoresDL.EliminarProveedor(Id);
+        }
+
     }
 }
